@@ -43,9 +43,6 @@ const InputModal = props => {
           address,
         })
         .then(res => {
-          for (let i = 0; i < props.userData.length; i++) {
-            console.log(props.userData[i].id);
-          }
           props.setUserData([...props.userData, res.data]);
           console.log(res.data);
 

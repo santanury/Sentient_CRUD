@@ -33,38 +33,12 @@ const InputModal = props => {
     else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       alert('Please enter a valid email');
     } else {
-      await axios
-        .put(
-          `https://jsonplaceholder.typicode.com/users/${props.itemToEdit.id}`,
-          {
-            name,
-            email,
-            phone,
-            address,
-          },
-        )
-        .then(res => {
-          console.log(res.data);
-          for (let i = 0; i < props.userData.length; i++) {
-            if (props.userData[i].id == props.itemToEdit.id) {
-              props.userData[i].name = name;
-              props.userData[i].email = email;
-              props.userData[i].phone = phone;
-              props.userData[i].address = address;
-            }
-          }
-
-          // clearing the input fields
-          setName('');
-          setEmail('');
-          setPhone('');
-          setAddress({street: ''});
-          // modal closing
-          props.setEditModalVisible(false);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      // js prototype assigning R&D required
+      props.itemToEdit.name = name;
+      props.itemToEdit.email = email;
+      props.itemToEdit.phone = phone;
+      props.itemToEdit.address.street = address;
+      props.setEditModalVisible(false);
     }
   };
 
@@ -135,6 +109,7 @@ const InputModal = props => {
               borderWidth: 1,
               borderColor: '#000000',
               fontSize: 15,
+              color: '#000000',
             }}
             value={name}
             onChangeText={text => setName(text)}
@@ -152,6 +127,7 @@ const InputModal = props => {
               borderWidth: 1,
               borderColor: '#000000',
               fontSize: 15,
+              color: '#000000',
             }}
             keyboardType={'email-address'}
             value={email}
@@ -170,6 +146,7 @@ const InputModal = props => {
               borderWidth: 1,
               borderColor: '#000000',
               fontSize: 15,
+              color: '#000000',
             }}
             maxLength={10}
             keyboardType={'phone-pad'}
@@ -189,6 +166,7 @@ const InputModal = props => {
               borderWidth: 1,
               borderColor: '#000000',
               fontSize: 15,
+              color: '#000000',
             }}
             value={address}
             onChangeText={text => setAddress(text)}

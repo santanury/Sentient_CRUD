@@ -27,7 +27,7 @@ const App = () => {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
-  // id storage state
+  // id to delete storage state
   const [id, setId] = useState();
 
   // item to edit state
@@ -54,32 +54,18 @@ const App = () => {
   const deleteUser = async () => {
     setUserData(userData.filter((user, key) => key !== id));
     setDeleteModalVisible(false);
-    // await axios
-    //   .delete(`https://jsonplaceholder.typicode.com/users/${id}`)
-    //   .then(res => {
-
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+    
   };
 
   const deleteUsers = async () => {
     setUserData(userData.filter((user, index) => !idsToDelete.includes(index)));
     setIdsToDelete([]);
     setDeleteModalVisible(false);
-    // await axios
-    //   .delete(`https://jsonplaceholder.typicode.com/users/${idsToDelete}`)
-    //   .then(res => {
-
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+    
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor:"#FFFFFF", height:"100%"}}>
       {/* input modal */}
 
       {inputModalVisible ? (
@@ -110,7 +96,7 @@ const App = () => {
       {deleteModalVisible ? (
         <DeleteModal
           setDeleteModalVisible={setDeleteModalVisible}
-          deleteUser={deleteUser}
+          
           deleteUsers={deleteUsers}
         />
       ) : (
@@ -187,7 +173,7 @@ const App = () => {
             style={{
               backgroundColor: '#28A745',
               height: 35,
-              width: '55%',
+              width: '65%',
               alignItems: 'center',
               justifyContent: 'center',
               borderRadius: 3,
@@ -216,7 +202,7 @@ const App = () => {
             }}>
             {/* all employee select checkbox */}
 
-            <CheckBox
+            <CheckBox style={{color: '#000000'}}
               disabled={false}
               value={
                 idsToDelete.length === userData?.length &&
@@ -294,7 +280,7 @@ const App = () => {
                     borderBottomWidth: 1,
                     borderBottomColor: '#9F9F9F',
                   }}>
-                  <CheckBox
+                  <CheckBox style={{color: '#000000'}}
                     disabled={false}
                     value={idsToDelete.includes(index) ? true : false}
                     onValueChange={() => {
@@ -373,7 +359,7 @@ const App = () => {
                       style={{marginLeft: 15}}
                       onPress={() => {
                         setDeleteModalVisible(true);
-                        setId(index);
+                        setIdsToDelete([index]);
                       }}>
                       <Image
                         source={icons.deleteIcon}

@@ -2,7 +2,6 @@ import {Modal, View, Text, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 
 // constant imports
-// constant imports
 import {icons} from '../Constants';
 
 const DeleteModal = props => {
@@ -123,7 +122,6 @@ const DeleteModal = props => {
                 marginBottom: 20,
               }}
               onPress={() => {
-                props.deleteUser ? props.deleteUser() : null;
                 props.deleteUsers ? props.deleteUsers() : null;
               }}>
               <Text style={{color: '#FFFFFF', fontSize: 15, fontWeight: '500'}}>
