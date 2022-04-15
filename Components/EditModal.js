@@ -7,7 +7,6 @@ import {
   Image,
 } from 'react-native';
 import React, {useState} from 'react';
-import axios from 'axios';
 
 // constant imports
 import {icons} from '../Constants';

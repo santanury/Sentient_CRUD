@@ -51,21 +51,14 @@ const App = () => {
       });
   };
 
-  const deleteUser = async () => {
-    setUserData(userData.filter((user, key) => key !== id));
-    setDeleteModalVisible(false);
-    
-  };
-
   const deleteUsers = async () => {
     setUserData(userData.filter((user, index) => !idsToDelete.includes(index)));
     setIdsToDelete([]);
     setDeleteModalVisible(false);
-    
   };
 
   return (
-    <SafeAreaView style={{backgroundColor:"#FFFFFF", height:"100%"}}>
+    <SafeAreaView style={{backgroundColor: '#9F9F9F', height: '100%'}}>
       {/* input modal */}
 
       {inputModalVisible ? (
@@ -96,7 +89,6 @@ const App = () => {
       {deleteModalVisible ? (
         <DeleteModal
           setDeleteModalVisible={setDeleteModalVisible}
-          
           deleteUsers={deleteUsers}
         />
       ) : (
@@ -197,12 +189,12 @@ const App = () => {
               flexDirection: 'row',
               height: 45,
               alignItems: 'center',
-              borderBottomWidth: 1,
-              borderBottomColor: '#9F9F9F',
+              borderBottomWidth: 1.,
+              borderBottomColor: '#000000',
             }}>
             {/* all employee select checkbox */}
 
-            <CheckBox style={{color: '#000000'}}
+            <CheckBox 
               disabled={false}
               value={
                 idsToDelete.length === userData?.length &&
@@ -220,8 +212,7 @@ const App = () => {
               }}
             />
 
-            {/* employee name */}
-
+            {/* employee name attribute */}
             <Text
               style={{
                 width: 200,
@@ -230,6 +221,8 @@ const App = () => {
               }}>
               Name
             </Text>
+
+            {/* employee email attribute */}
             <Text
               style={{
                 width: 200,
@@ -238,6 +231,8 @@ const App = () => {
               }}>
               Email
             </Text>
+
+            {/* employee address attribute */}
             <Text
               style={{
                 width: 250,
@@ -246,6 +241,8 @@ const App = () => {
               }}>
               Address
             </Text>
+
+            {/* employee phone attribute */}
             <Text
               style={{
                 width: 200,
@@ -254,6 +251,8 @@ const App = () => {
               }}>
               Phone
             </Text>
+
+            {/* employee action attribute */}
             <Text
               style={{
                 width: 100,
@@ -278,9 +277,9 @@ const App = () => {
                     height: 45,
                     alignItems: 'center',
                     borderBottomWidth: 1,
-                    borderBottomColor: '#9F9F9F',
+                    borderBottomColor: '#000000',
                   }}>
-                  <CheckBox style={{color: '#000000'}}
+                  <CheckBox
                     disabled={false}
                     value={idsToDelete.includes(index) ? true : false}
                     onValueChange={() => {
