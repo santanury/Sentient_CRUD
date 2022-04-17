@@ -124,6 +124,7 @@ const InputModal = props => {
               borderWidth: 1,
               borderColor: '#000000',
               fontSize: 15,
+              color:"#000000"
             }}
             value={name}
             onChangeText={text => setName(text)}
@@ -141,6 +142,7 @@ const InputModal = props => {
               borderWidth: 1,
               borderColor: '#000000',
               fontSize: 15,
+              color:"#000000"
             }}
             keyboardType={'email-address'}
             value={email}
@@ -159,6 +161,7 @@ const InputModal = props => {
               borderWidth: 1,
               borderColor: '#000000',
               fontSize: 15,
+              color:"#000000"
             }}
             maxLength={10}
             keyboardType={'phone-pad'}
@@ -178,6 +181,7 @@ const InputModal = props => {
               borderWidth: 1,
               borderColor: '#000000',
               fontSize: 15,
+              color:"#000000"
             }}
             value={address.street}
             onChangeText={text => setAddress({street: text})}

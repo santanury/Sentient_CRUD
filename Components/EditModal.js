@@ -81,7 +81,7 @@ const InputModal = props => {
                 color: '#000000',
                 fontWeight: '500',
               }}>
-              Add Employee
+              Edit Employee
             </Text>
 
             {/* close button */}
