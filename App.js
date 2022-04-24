@@ -6,6 +6,7 @@ import {
   Text,
   TouchableOpacity,
   Image,
+  StyleSheet,
 } from 'react-native';
 import axios from 'axios';
 import CheckBox from '@react-native-community/checkbox';
@@ -27,14 +28,14 @@ const App = () => {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
-  // id to delete storage state
-  const [id, setId] = useState();
-
   // item to edit state
   const [itemToEdit, setItemToEdit] = useState();
 
   // ids to delete state
   const [idsToDelete, setIdsToDelete] = useState([]);
+
+  // internet error state
+  const [internetError, setInternetError] = useState(false);
 
   useEffect(() => {
     fetchUsers();
@@ -45,9 +46,11 @@ const App = () => {
       .get('https://jsonplaceholder.typicode.com/users')
       .then(res => {
         setUserData(res.data);
+        setInternetError(false);
       })
       .catch(err => {
         console.log(err);
+        setInternetError(true);
       });
   };
 
@@ -58,7 +61,7 @@ const App = () => {
   };
 
   return (
-    <SafeAreaView style={{backgroundColor: '#9F9F9F', height: '100%'}}>
+    <SafeAreaView style={{backgroundColor: '#FFFFFF', height: '100%'}}>
       {/* input modal */}
 
       {inputModalVisible ? (
@@ -94,286 +97,248 @@ const App = () => {
       ) : (
         <></>
       )}
-      <View
-        style={{
-          flexDirection: 'row',
-          height: 50,
-          width: '100%',
-          backgroundColor: '#435D7D',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
+
+      {/* header */}
+
+      <View style={styles.header}>
         {/* heading */}
 
-        <Text
-          style={{
-            fontSize: 17,
-            color: '#FFFFFF',
-            fontWeight: '700',
-            marginLeft: 10,
-          }}>
-          Manage Employee
-        </Text>
+        <Text style={styles.heading}>Manage Employee</Text>
 
         {/* button container */}
 
-        <View
-          style={{
-            flexDirection: 'row',
-            width: '50%',
-            justifyContent: 'space-evenly',
-          }}>
+        <View style={styles.headerBtnContainer}>
           {/* delete button */}
 
           {idsToDelete.length != 0 ? (
             <TouchableOpacity
-              style={{
-                height: 35,
-                width: '30%',
-                backgroundColor: '#DC3545',
-                borderRadius: 3,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+              style={styles.deleteBtn}
               onPress={() => {
                 setDeleteModalVisible(true);
               }}>
-              <Text style={{color: '#FFFFFF', fontSize: 15, fontWeight: '500'}}>
-                Delete
-              </Text>
+              <Text style={styles.btnTxt}>Delete</Text>
             </TouchableOpacity>
           ) : (
-            <View
-              style={{
-                backgroundColor: '#DC354599',
-                height: 35,
-                width: '30%',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: 3,
-              }}>
-              <Text
-                style={{color: '#FFFFFF99', fontSize: 15, fontWeight: '500'}}>
-                Delete
-              </Text>
+            <View style={[styles.deleteBtn, {backgroundColor: '#DC354599'}]}>
+              <Text style={styles.btnTxt}>Delete</Text>
             </View>
           )}
 
           {/* add employee button */}
 
           <TouchableOpacity
-            style={{
-              backgroundColor: '#28A745',
-              height: 35,
-              width: '65%',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: 3,
-            }}
+            style={styles.addBtn}
             onPress={() => setInputModalVisible(true)}>
-            <Text style={{color: '#FFFFFF', fontSize: 15, fontWeight: '500'}}>
-              Add Employee
-            </Text>
+            <Text style={styles.btnTxt}>Add Employee</Text>
           </TouchableOpacity>
         </View>
       </View>
 
       {/* horizontal scroll container */}
 
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <View>
-          {/* attribute section */}
+      {internetError !== true ? (
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <View>
+            {/* attribute section */}
 
-          <View
-            style={{
-              flexDirection: 'row',
-              height: 45,
-              alignItems: 'center',
-              borderBottomWidth: 1.,
-              borderBottomColor: '#000000',
-            }}>
-            {/* all employee select checkbox */}
+            <View style={styles.itemRowSection}>
+              {/* all employee select checkbox */}
 
-            <CheckBox 
-              disabled={false}
-              value={
-                idsToDelete.length === userData?.length &&
-                userData?.length !== 0
-                  ? true
-                  : false
-              }
-              onValueChange={() => {
-                // select all idsToDelete
-                if (idsToDelete?.length === userData?.length) {
-                  setIdsToDelete([]);
-                } else {
-                  setIdsToDelete(userData?.map((user, key) => key));
+              <CheckBox
+                tintColors={{true: '#00FF00', false: 'black'}}
+                disabled={false}
+                value={
+                  idsToDelete.length === userData?.length &&
+                  userData?.length !== 0
+                    ? true
+                    : false
                 }
-              }}
-            />
+                onValueChange={() => {
+                  // select all idsToDelete
+                  if (idsToDelete?.length === userData?.length) {
+                    setIdsToDelete([]);
+                  } else {
+                    setIdsToDelete(userData?.map((user, key) => key));
+                  }
+                }}
+              />
 
-            {/* employee name attribute */}
-            <Text
-              style={{
-                width: 200,
-                color: '#000000',
-                fontWeight: '500',
-              }}>
-              Name
-            </Text>
+              {/* employee name attribute */}
+              <Text style={[styles.attribute, {fontWeight: '500'}]}>Name</Text>
 
-            {/* employee email attribute */}
-            <Text
-              style={{
-                width: 200,
-                color: '#000000',
-                fontWeight: '500',
-              }}>
-              Email
-            </Text>
+              {/* employee email attribute */}
+              <Text style={[styles.attribute, {fontWeight: '500'}]}>Email</Text>
 
-            {/* employee address attribute */}
-            <Text
-              style={{
-                width: 250,
-                color: '#000000',
-                fontWeight: '500',
-              }}>
-              Address
-            </Text>
+              {/* employee address attribute */}
+              <Text style={[styles.attribute, {fontWeight: '500'}]}>
+                Address
+              </Text>
 
-            {/* employee phone attribute */}
-            <Text
-              style={{
-                width: 200,
-                color: '#000000',
-                fontWeight: '500',
-              }}>
-              Phone
-            </Text>
+              {/* employee phone attribute */}
+              <Text style={[styles.attribute, {fontWeight: '500'}]}>Phone</Text>
 
-            {/* employee action attribute */}
-            <Text
-              style={{
-                width: 100,
-                color: '#000000',
-                fontWeight: '500',
-              }}>
-              Action
-            </Text>
-          </View>
+              {/* employee action attribute */}
+              <Text style={[styles.attribute, {fontWeight: '500', width: 75}]}>
+                Action
+              </Text>
+            </View>
 
-          {/* vertivally scrollable employee list */}
+            {/* vertivally scrollable employee list */}
 
-          <ScrollView showsVerticalScrollIndicator={false}>
-            {/* employee data */}
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {/* employee data */}
 
-            {userData?.map((item, index) => {
-              return (
-                <View
-                  key={index}
-                  style={{
-                    flexDirection: 'row',
-                    height: 45,
-                    alignItems: 'center',
-                    borderBottomWidth: 1,
-                    borderBottomColor: '#000000',
-                  }}>
-                  <CheckBox
-                    disabled={false}
-                    value={idsToDelete.includes(index) ? true : false}
-                    onValueChange={() => {
-                      if (idsToDelete.includes(index)) {
-                        setIdsToDelete(idsToDelete.filter(id => id !== index));
-                      } else {
-                        setIdsToDelete([...idsToDelete, index]);
-                      }
-                    }}
-                  />
+              {userData?.map((item, index) => {
+                return (
+                  <View key={index} style={styles.itemRowSection}>
+                    <CheckBox
+                      tintColors={{true: '#00FF00', false: 'black'}}
+                      disabled={false}
+                      value={idsToDelete.includes(index) ? true : false}
+                      onValueChange={() => {
+                        if (idsToDelete.includes(index)) {
+                          setIdsToDelete(
+                            idsToDelete.filter(id => id !== index),
+                          );
+                        } else {
+                          setIdsToDelete([...idsToDelete, index]);
+                        }
+                      }}
+                    />
 
-                  {/* employee name */}
+                    {/* employee name */}
+                    <Text style={styles.attribute}>{item.name}</Text>
 
-                  <Text
-                    style={{
-                      width: 200,
-                      color: '#000000',
-                    }}>
-                    {item.name}
-                  </Text>
+                    {/* employee email */}
+                    <Text style={styles.attribute}>{item.email}</Text>
 
-                  {/* employee email */}
+                    {/* employee address */}
+                    <Text style={styles.attribute}>{item.address.street}</Text>
 
-                  <Text
-                    style={{
-                      width: 200,
-                      color: '#000000',
-                    }}>
-                    {item.email}
-                  </Text>
+                    {/* employee phone */}
+                    <Text style={styles.attribute}>{item.phone}</Text>
 
-                  {/* employee address */}
+                    {/* employee action */}
 
-                  <Text
-                    style={{
-                      width: 250,
-                      color: '#000000',
-                    }}>
-                    {item.address.street}
-                  </Text>
+                    <View style={styles.empActionSection}>
+                      {/* edit button */}
 
-                  {/* employee phone */}
+                      <TouchableOpacity
+                        onPress={() => {
+                          setEditModalVisible(true);
+                          setItemToEdit(item);
+                        }}>
+                        <Image
+                          source={icons.editIcon}
+                          style={styles.actionBtnIcon}
+                        />
+                      </TouchableOpacity>
 
-                  <Text
-                    style={{
-                      width: 200,
-                      color: '#000000',
-                    }}>
-                    {item.phone}
-                  </Text>
+                      {/* delete button */}
 
-                  {/* employee action */}
-
-                  <View
-                    style={{
-                      width: 100,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}>
-                    {/* edit button */}
-
-                    <TouchableOpacity
-                      onPress={() => {
-                        setEditModalVisible(true);
-                        setItemToEdit(item);
-                      }}>
-                      <Image
-                        source={icons.editIcon}
-                        style={{width: 20, height: 20}}
-                      />
-                    </TouchableOpacity>
-
-                    {/* delete button */}
-
-                    <TouchableOpacity
-                      style={{marginLeft: 15}}
-                      onPress={() => {
-                        setDeleteModalVisible(true);
-                        setIdsToDelete([index]);
-                      }}>
-                      <Image
-                        source={icons.deleteIcon}
-                        style={{width: 20, height: 20}}
-                      />
-                    </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{marginLeft: 15}}
+                        onPress={() => {
+                          setDeleteModalVisible(true);
+                          setIdsToDelete([index]);
+                        }}>
+                        <Image
+                          source={icons.deleteIcon}
+                          style={styles.actionBtnIcon}
+                        />
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
-              );
-            })}
-          </ScrollView>
+                );
+              })}
+            </ScrollView>
+          </View>
+        </ScrollView>
+      ) : (
+        // no internet container
+
+        <View style={styles.errorContainer}>
+          {/* no connection text */}
+
+          <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+            No Internet Connection
+          </Text>
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: 'bold',
+            }}>
+            Please turn your internet on retry
+          </Text>
+          <TouchableOpacity
+            style={styles.addBtn}
+            onPress={() => {
+              fetchUsers();
+            }}>
+            <Text style={styles.btnTxt}>Retry</Text>
+          </TouchableOpacity>
         </View>
-      </ScrollView>
+      )}
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    height: 50,
+    width: '100%',
+    backgroundColor: '#435D7D',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  heading: {
+    fontSize: 17,
+    color: '#FFFFFF',
+    fontWeight: '700',
+    marginLeft: 10,
+  },
+  headerBtnContainer: {
+    flexDirection: 'row',
+    width: '50%',
+    justifyContent: 'space-evenly',
+  },
+  deleteBtn: {
+    height: 35,
+    width: '30%',
+    backgroundColor: '#DC3545',
+    borderRadius: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  btnTxt: {color: '#FFFFFF', fontSize: 15, fontWeight: '500'},
+  addBtn: {
+    backgroundColor: '#28A745',
+    height: 35,
+    width: '65%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 3,
+  },
+  itemRowSection: {
+    flexDirection: 'row',
+    height: 45,
+    alignItems: 'center',
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#9F9F9F',
+  },
+  attribute: {
+    width: 200,
+    color: '#000000',
+    fontWeight: '400',
+  },
+  empActionSection: {
+    width: 75,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  actionBtnIcon: {width: 20, height: 20},
+  errorContainer: {flex: 1, justifyContent: 'center', alignItems: 'center'},
+});
 
 export default App;
