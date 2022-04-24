@@ -33,19 +33,30 @@ const InputModal = props => {
     // email validation with regex
     else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       alert('Please enter a valid email');
-    }
-    // push data to userData array with existing data
-    else {
-      props.setUserData([
-        ...props.userData,
-        {
-          name: name,
-          email: email,
-          phone: phone,
-          address: address,
-        },
-      ]);
-      props.setInputModalVisible(false);
+    } else {
+      await axios
+        .post('https://jsonplaceholder.typicode.com/users', {
+          name,
+          email,
+          phone,
+          address,
+        })
+        .then(res => {
+          props.setUserData([
+            ...props.userData,
+            {
+              name: name,
+              email: email,
+              phone: phone,
+              address: address,
+            },
+          ]);
+          props.setInputModalVisible(false);
+        })
+        .catch(err => {
+          // please check your internet connection and try again
+          alert('Please check your internet connection and try again');
+        });
     }
   };
 

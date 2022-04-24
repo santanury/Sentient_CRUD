@@ -12,7 +12,7 @@ import React, {useState} from 'react';
 // constant imports
 import {icons} from '../Constants';
 
-const InputModal = props => {
+const EditModal = props => {
   // user input state
   const [name, setName] = useState(props.itemToEdit.name);
   const [email, setEmail] = useState(props.itemToEdit.email);
@@ -207,4 +207,4 @@ const styles = StyleSheet.create({
   buttonText: {color: '#000000', fontSize: 15, fontWeight: '500'},
 });
 
-export default InputModal;
+export default EditModal;
