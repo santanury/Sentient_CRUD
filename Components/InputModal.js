@@ -54,7 +54,6 @@ const InputModal = props => {
           props.setInputModalVisible(false);
         })
         .catch(err => {
-          // please check your internet connection and try again
           alert('Please check your internet connection and try again');
         });
     }
