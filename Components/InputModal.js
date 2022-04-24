@@ -34,31 +34,18 @@ const InputModal = props => {
     else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       alert('Please enter a valid email');
     }
-    // post new user
+    // push data to userData array with existing data
     else {
-      await axios
-        .post('https://jsonplaceholder.typicode.com/users', {
-          name,
-          email,
-          phone,
-          address,
-        })
-        .then(res => {
-          props.setUserData([...props.userData, res.data]);
-          console.log(res.data);
-
-          // clearing the input fields
-          setName('');
-          setEmail('');
-          setPhone('');
-          setAddress({street: ''});
-          // modal closing
-          props.setInputModalVisible(false);
-        })
-        .catch(err =>
-          // alert no internet connection, try again
-          alert('No internet connection, try again'),
-        );
+      props.setUserData([
+        ...props.userData,
+        {
+          name: name,
+          email: email,
+          phone: phone,
+          address: address,
+        },
+      ]);
+      props.setInputModalVisible(false);
     }
   };
 
