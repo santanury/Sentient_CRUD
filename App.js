@@ -61,16 +61,20 @@ const App = () => {
   };
 
   return (
-    <SafeAreaView style={{backgroundColor: '#FFFFFF', height: '100%'}}>
-      {/* input modal */}
+    // container
 
+    <SafeAreaView style={{backgroundColor: '#FFFFFF', height: '100%'}}>
       {inputModalVisible ? (
+        // input modal
+
         <InputModal
           setInputModalVisible={setInputModalVisible}
           setUserData={setUserData}
           userData={userData}
         />
       ) : editModalVisible ? (
+        // edit modal
+
         <EditModal
           setEditModalVisible={setEditModalVisible}
           setUserData={setUserData}
@@ -78,6 +82,8 @@ const App = () => {
           itemToEdit={itemToEdit}
         />
       ) : deleteModalVisible ? (
+        // delete modal
+
         <DeleteModal
           setDeleteModalVisible={setDeleteModalVisible}
           deleteUsers={deleteUsers}
