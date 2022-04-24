@@ -19,8 +19,8 @@ const EditModal = props => {
   const [phone, setPhone] = useState(props.itemToEdit.phone);
   const [address, setAddress] = useState(props.itemToEdit.address.street);
 
-  // update button
-  const update = async () => {
+  // update button functionality
+  const update = () => {
     // empty fields validation
     name === '' || email === '' || phone === '' || address === ''
       ? alert('Please fill all fields')
@@ -30,12 +30,11 @@ const EditModal = props => {
       : // valid email check using regex
       !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
       ? alert('Please enter a valid email')
-      : // js prototype assigning R&D required
-        (props.itemToEdit.name = name);
+      : props.setEditModalVisible(false);
+    props.itemToEdit.name = name;
     props.itemToEdit.email = email;
     props.itemToEdit.phone = phone;
     props.itemToEdit.address.street = address;
-    props.setEditModalVisible(false);
   };
 
   return (
