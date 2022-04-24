@@ -70,33 +70,19 @@ const App = () => {
           setUserData={setUserData}
           userData={userData}
         />
-      ) : (
-        <></>
-      )}
-
-      {/* edit modal */}
-
-      {editModalVisible ? (
+      ) : editModalVisible ? (
         <EditModal
           setEditModalVisible={setEditModalVisible}
           setUserData={setUserData}
           userData={userData}
           itemToEdit={itemToEdit}
         />
-      ) : (
-        <></>
-      )}
-
-      {/* delete modal */}
-
-      {deleteModalVisible ? (
+      ) : deleteModalVisible ? (
         <DeleteModal
           setDeleteModalVisible={setDeleteModalVisible}
           deleteUsers={deleteUsers}
         />
-      ) : (
-        <></>
-      )}
+      ) : null}
 
       {/* header */}
 
@@ -260,18 +246,15 @@ const App = () => {
         // no internet container
 
         <View style={styles.errorContainer}>
-          {/* no connection text */}
+          {/* no connection texts */}
 
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-            No Internet Connection
-          </Text>
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: 'bold',
-            }}>
+          <Text style={styles.errorTxt}>No Internet Connection</Text>
+          <Text style={[styles.errorTxt, {fontSize: 15, marginBottom: 15}]}>
             Please turn your internet on retry
           </Text>
+
+          {/* retry button */}
+
           <TouchableOpacity
             style={styles.addBtn}
             onPress={() => {
@@ -341,6 +324,11 @@ const styles = StyleSheet.create({
   },
   actionBtnIcon: {width: 20, height: 20},
   errorContainer: {flex: 1, justifyContent: 'center', alignItems: 'center'},
+  errorTxt: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#9F9F9F',
+  },
 });
 
 export default App;
