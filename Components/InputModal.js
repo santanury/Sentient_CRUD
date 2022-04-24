@@ -20,7 +20,7 @@ const InputModal = props => {
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState({street: ''});
 
-  // save button
+  // save button functionality
   const save = async () => {
     // empty fields validation
     name === '' || email === '' || phone === '' || address === ''
