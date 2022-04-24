@@ -14,7 +14,7 @@ import axios from 'axios';
 import {icons} from '../Constants';
 
 const InputModal = props => {
-  // user input state
+  // user input states
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -23,40 +23,38 @@ const InputModal = props => {
   // save button
   const save = async () => {
     // empty fields validation
-    if (name === '' || email === '' || phone === '' || address === '') {
-      alert('Please fill all fields');
-    }
-    // phone number length validation
-    else if (phone.length !== 10) {
-      alert('Please enter valid phone number');
-    }
-    // email validation with regex
-    else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-      alert('Please enter a valid email');
-    } else {
-      await axios
-        .post('https://jsonplaceholder.typicode.com/users', {
-          name,
-          email,
-          phone,
-          address,
-        })
-        .then(res => {
-          props.setUserData([
-            ...props.userData,
-            {
-              name: name,
-              email: email,
-              phone: phone,
-              address: address,
-            },
-          ]);
-          props.setInputModalVisible(false);
-        })
-        .catch(err => {
-          alert('Please check your internet connection and try again');
-        });
-    }
+    name === '' || email === '' || phone === '' || address === ''
+      ? alert('Please fill all fields')
+      : // phone number length validation
+      phone.length !== 10
+      ? alert('Please enter valid phone number')
+      : // valid email check using regex
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+      ? alert('Please enter a valid email')
+      : // api call to save data
+        await axios
+          .post('https://jsonplaceholder.typicode.com/users', {
+            name,
+            email,
+            phone,
+            address,
+          })
+          .then(res => {
+            props.setUserData([
+              ...props.userData,
+              {
+                name: name,
+                email: email,
+                phone: phone,
+                address: address,
+              },
+            ]);
+            props.setInputModalVisible(false);
+          })
+          .catch(err => {
+            // error handling
+            alert('Please check your internet connection and try again');
+          });
   };
 
   return (

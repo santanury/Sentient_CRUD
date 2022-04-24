@@ -22,24 +22,20 @@ const EditModal = props => {
   // update button
   const update = async () => {
     // empty fields validation
-    if (name === '' || email === '' || phone === '' || address === '') {
-      alert('Please fill all fields');
-    }
-    // phone number length validation
-    else if (phone.length !== 10) {
-      alert('Please enter valid phone number');
-    }
-    // email validation with regex
-    else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-      alert('Please enter a valid email');
-    } else {
-      // js prototype assigning R&D required
-      props.itemToEdit.name = name;
-      props.itemToEdit.email = email;
-      props.itemToEdit.phone = phone;
-      props.itemToEdit.address.street = address;
-      props.setEditModalVisible(false);
-    }
+    name === '' || email === '' || phone === '' || address === ''
+      ? alert('Please fill all fields')
+      : // phone number length validation
+      phone.length !== 10
+      ? alert('Please enter valid phone number')
+      : // valid email check using regex
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+      ? alert('Please enter a valid email')
+      : // js prototype assigning R&D required
+        (props.itemToEdit.name = name);
+    props.itemToEdit.email = email;
+    props.itemToEdit.phone = phone;
+    props.itemToEdit.address.street = address;
+    props.setEditModalVisible(false);
   };
 
   return (
