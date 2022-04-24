@@ -185,7 +185,9 @@ const App = () => {
 
             {/* vertivally scrollable employee list */}
 
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView
+              style={{paddingBottom: 10}}
+              showsVerticalScrollIndicator={false}>
               {/* employee data */}
 
               {userData?.map((item, index) => {

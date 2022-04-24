@@ -1,4 +1,11 @@
-import {Modal, View, Text, TouchableOpacity, Image} from 'react-native';
+import {
+  Modal,
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+} from 'react-native';
 import React from 'react';
 
 // constant imports
@@ -10,39 +17,17 @@ const DeleteModal = props => {
 
     <Modal visible={true} transparent>
       {/* transparent section */}
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: '#00000099',
-        }}>
+
+      <View style={styles.transparentSection}>
         {/* visible section */}
-        <View
-          style={{
-            width: '90%',
-            backgroundColor: '#FFFFFF',
-            borderRadius: 10,
-            alignItems: 'center',
-          }}>
+
+        <View style={styles.visibleSection}>
           {/* modal header */}
-          <View
-            style={{
-              flexDirection: 'row',
-              height: 45,
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              width: '90%',
-            }}>
+
+          <View style={styles.header}>
             {/* modal heading */}
-            <Text
-              style={{
-                fontSize: 17,
-                color: '#000000',
-                fontWeight: '500',
-              }}>
-              Delete Employee
-            </Text>
+
+            <Text style={styles.heading}>Delete Employee</Text>
             {/* close button */}
             <TouchableOpacity
               onPress={() => {
@@ -57,76 +42,37 @@ const DeleteModal = props => {
           </View>
 
           {/* warning text */}
-          <Text
-            style={{
-              fontSize: 15,
-              color: '#000000',
-              fontWeight: '300',
-              marginVertical: 25,
-              width: '90%',
-            }}>
+          <Text style={[styles.warningText, {marginVertical: 25}]}>
             Are you sure you want to delete these records?
           </Text>
 
           {/* reminder text */}
 
-          <Text
-            style={{
-              fontSize: 15,
-              color: '#FFFF00',
-              fontWeight: '300',
-              width: '90%',
-            }}>
+          <Text style={[styles.warningText, {color: '#FF4500'}]}>
             The action cannot be undone
           </Text>
 
           {/* cancel and save section */}
 
-          <View
-            style={{
-              width: '90%',
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-            }}>
+          <View style={styles.cancelAndSaveSection}>
             {/* cancel button */}
 
             <TouchableOpacity
-              style={{
-                marginTop: 20,
-                height: 35,
-                width: '30%',
-                borderRadius: 3,
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: 20,
-              }}
+              style={styles.btn}
               onPress={() => {
                 props.setDeleteModalVisible(false);
               }}>
-              <Text style={{color: '#000000', fontSize: 15, fontWeight: '500'}}>
-                Cancel
-              </Text>
+              <Text style={styles.btnText}>Cancel</Text>
             </TouchableOpacity>
 
             {/* save button */}
 
             <TouchableOpacity
-              style={{
-                marginTop: 20,
-                height: 35,
-                width: '30%',
-                backgroundColor: '#DC3545',
-                borderRadius: 3,
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: 20,
-              }}
+              style={[styles.btn, {backgroundColor: '#DC3545'}]}
               onPress={() => {
                 props.deleteUsers ? props.deleteUsers() : null;
               }}>
-              <Text style={{color: '#FFFFFF', fontSize: 15, fontWeight: '500'}}>
-                Delete
-              </Text>
+              <Text style={[styles.btnText, {color: '#fff'}]}>Delete</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -134,5 +80,63 @@ const DeleteModal = props => {
     </Modal>
   );
 };
+
+const styles = StyleSheet.create({
+  transparentSection: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#00000099',
+  },
+  visibleSection: {
+    width: '90%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  header: {
+    flexDirection: 'row',
+    height: 45,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '90%',
+  },
+  heading: {
+    fontSize: 17,
+    color: '#000000',
+    fontWeight: '500',
+  },
+  warningText: {
+    fontSize: 15,
+    color: '#000000',
+    fontWeight: '300',
+    width: '90%',
+  },
+  reminderText: {
+    fontSize: 15,
+    color: '#FFFF00',
+    fontWeight: '300',
+    width: '90%',
+  },
+  cancelAndSaveSection: {
+    width: '90%',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  btn: {
+    marginTop: 20,
+    height: 35,
+    width: '30%',
+    borderRadius: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+  },
+  btnText: {
+    color: '#000000',
+    fontSize: 15,
+    fontWeight: '500',
+  },
+});
 
 export default DeleteModal;
